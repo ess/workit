@@ -1,6 +1,6 @@
-As a developer
-In order to keep track of my time easily and reliably
-I want to be able to do so in a terminal
+    As a developer
+    In order to keep track of my time easily and reliably
+    I want to be able to do so in a terminal
 
 ## What is it?
 
