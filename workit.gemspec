@@ -16,6 +16,7 @@ spec = Gem::Specification.new do |s|
     lib/workit/model/task.rb
     lib/workit/abstract_command.rb
     lib/workit/start_task_command.rb
+    README.md
   )
   s.require_paths << 'lib'
   s.rdoc_options << '--title' << 'workit' << '--main' << 'README.rdoc' << '-ri'

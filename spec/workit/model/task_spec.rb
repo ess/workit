@@ -19,7 +19,7 @@ module Workit
       end
       describe '.can_start?' do
         before :each do
-          Workit::Model::Task.all.map(&:destroy)
+          Workit::Model::Task.all.map(&:destroy!)
         end
         context 'when there are no tasks' do
           it 'should return true' do
@@ -32,6 +32,33 @@ module Workit
             @task.save
             @task.start!
             Workit::Model::Task.can_start?.should be_false
+          end
+        end
+      end
+      describe '.can_finish?' do
+        before :each do
+          Workit::Model::Task.all.map(&:destroy!)
+        end
+        context 'when there are no tasks' do
+          it 'should return false' do
+            Workit::Model::Task.can_finish?.should be_false
+          end
+        end
+        context 'when there is no unfinished task' do
+          it 'should return false' do
+            @task = Workit::Model::Task.new(:description => 'finished task')
+            @task.save
+            @task.start!
+            @task.finish!
+            Workit::Model::Task.can_finish?.should be_false
+          end
+        end
+        context 'when there is an unfinished task' do
+          it 'should return true' do
+            @task = Workit::Model::Task.new(:description => 'unfinished task')
+            @task.save
+            @task.start!
+            Workit::Model::Task.can_finish?.should be_true
           end
         end
       end
