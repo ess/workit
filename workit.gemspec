@@ -18,10 +18,14 @@ spec = Gem::Specification.new do |s|
   s.executables << 'workit'
   s.add_dependency('bundler', '~> 1.0.18')
   s.add_dependency('clamp', '~> 0.2.3')
+  s.add_dependency('data_mapper', '~> 1.1.0')
+  s.add_dependency('dm-sqlite-adapter', '~> 1.1.0')
+  s.add_dependency('state_machine', '~> 1.0.1')
   s.add_development_dependency('rake', '~> 0.9.2')
   s.add_development_dependency('rdoc', '~> 3.8')
   s.add_development_dependency('reek', '~> 1.2.8')
   s.add_development_dependency('rspec', '~> 2.6.0')
+  s.add_development_dependency('coco', '~> 0.5.1')
   s.add_development_dependency('cucumber', '~> 1.0.2')
   s.add_development_dependency('aruba', '~> 0.4.3')
 

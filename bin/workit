@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+$:.unshift(File.join(File.dirname(File.dirname(__FILE__)), 'lib'))
+begin
+  require 'rubygems'
+rescue LoadError
+end
+
 require 'workit'
 
 Workit::MainCommand.run
