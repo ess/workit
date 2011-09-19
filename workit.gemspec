@@ -7,6 +7,13 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'https://github.com/ess/workit'
   s.platform = Gem::Platform::RUBY
   s.summary = 'A CLI time tracker'
+  s.description = <<-EOF
+  workit solves the following dilemma:
+
+  As a developer
+  In order to kep track of my time easily and reliably
+  I want to be able to do so in a terminal
+  EOF
   s.files = %w(
     bin/workit
     lib/workit.rb
