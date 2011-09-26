@@ -18,12 +18,20 @@ module Workit
           transition :started => :finished
         end
 
+        event :pause do
+          transition :started => :paused
+        end
+
         before_transition any => :started do |transition|
           self.spans.create(:started_at => Time.now)
         end
 
         before_transition :started => :finished do |transition|
-          self.spans.first(:finished_at => nil).update!(:finished_at => Time.now)
+          self.finish_current_span
+        end
+
+        before_transition :started => :paused do |transition|
+          self.finish_current_span
         end
       end
 
@@ -37,6 +45,10 @@ module Workit
         self.all(:state.not => 'finished').count == 1
       end
 
+      def self.can_pause?
+        self.all(:state => 'started').count == 1
+      end
+
       def self.current
         self.first(:state.not => 'finished')
       end
@@ -47,6 +59,11 @@ module Workit
 
       def destroy_spans
         self.spans.all.map(&:destroy)
+      end
+
+      def finish_current_span
+        self.spans.first(:finished_at => nil).update!(:finished_at => Time.now)
+
       end
     end
   end

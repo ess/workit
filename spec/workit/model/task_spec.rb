@@ -17,6 +17,15 @@ module Workit
           @task.duration.should == 15
         end
       end
+      describe '#finish_current_span' do
+        it 'should leave 0 unfinished spans' do
+          @task = Workit::Model::Task.new(:description => 'test task 2')
+          @task.save
+          @task.start!
+          @task.pause!
+          @task.spans.all(:finished_at => nil).count.should == 0
+        end
+      end
       describe '.can_start?' do
         before :each do
           Workit::Model::Task.all.map(&:destroy!)
@@ -59,6 +68,33 @@ module Workit
             @task.save
             @task.start!
             Workit::Model::Task.can_finish?.should be_true
+          end
+        end
+      end
+      describe '.can_pause?' do
+        before(:each) do
+          Workit::Model::Task.all.map(&:destroy!)          
+        end
+        context 'when there are no tasks' do
+          it 'should return false' do
+            Workit::Model::Task.can_pause?.should be_false
+          end
+        end
+        context 'where there is no unfinished task' do
+          it 'should return false' do
+            @task = Workit::Model::Task.new(:description => 'finished task')
+            @task.save
+            @task.start!
+            @task.finish
+            Workit::Model::Task.can_pause?.should be_false
+          end
+        end
+        context 'when there is an unfinished task' do
+          it 'should return false' do
+            @task = Workit::Model::Task.new(:description => 'unfinished task')
+            @task.save
+            @task.start!
+            Workit::Model::Task.can_pause?.should be_true
           end
         end
       end
